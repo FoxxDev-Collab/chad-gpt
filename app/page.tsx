@@ -10,7 +10,7 @@ export default function Page() {
     <ChatStoreProvider>
       <SidebarProvider>
         <AppSidebar />
-        <main className="flex flex-1 flex-col">
+        <main className="flex h-svh flex-1 flex-col overflow-hidden">
           <div className="flex items-center border-b p-2">
             <SidebarTrigger />
             <span className="ml-2 text-sm font-medium">ChadGPT</span>

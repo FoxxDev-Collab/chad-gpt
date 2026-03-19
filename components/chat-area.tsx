@@ -139,7 +139,7 @@ export function ChatArea() {
               &ldquo;Do I look like ChatGPT???&rdquo;
             </p>
           </div>
-          <div className="grid max-w-xl grid-cols-2 gap-2">
+          <div className="grid max-w-xl grid-cols-1 gap-2 sm:grid-cols-2">
             {SUGGESTIONS.map((s) => (
               <button
                 key={s}
