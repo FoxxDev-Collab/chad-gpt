@@ -35,9 +35,12 @@ function getDaysUntilRetirement() {
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages } = (await req.json()) as {
+    const { messages: allMessages } = (await req.json()) as {
       messages: { role: "user" | "assistant"; content: string }[]
     }
+
+    // Only send the last 10 messages to keep token usage low
+    const messages = allMessages.slice(-10)
 
     const encoder = new TextEncoder()
 

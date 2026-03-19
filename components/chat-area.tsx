@@ -7,10 +7,14 @@ import { useChatStore } from "@/lib/chat-store"
 import type { Message } from "@/lib/types"
 
 const SUGGESTIONS = [
-  "Why is the WiFi so slow?",
-  "Can you reset my password?",
-  "What's your retirement plan?",
-  "Should we move to the cloud?",
+  "I forgot my password again, can you reset it?",
+  "There's a site down again",
+  "An operator can't login for some reason",
+  "ePO is blocking something again, how do I fix it?",
+  "Did you submit your WAR on Friday?",
+  "Nessus flagged a bunch of critical findings, now what?",
+  "The STIG scan failed on half the servers",
+  "Can you just give me admin access real quick?",
 ]
 
 export function ChatArea() {
@@ -126,6 +130,11 @@ export function ChatArea() {
     }
   }, [activeChat, sendMessage])
 
+  const MAX_USER_MESSAGES = 20
+  const userMessageCount =
+    activeChat?.messages.filter((m) => m.role === "user").length ?? 0
+  const isAtLimit = userMessageCount >= MAX_USER_MESSAGES
+
   // Empty state
   if (!activeChat || activeChat.messages.length === 0) {
     return (
@@ -191,10 +200,16 @@ export function ChatArea() {
               </div>
             </div>
           )}
+          {isAtLimit && (
+            <div className="mx-auto my-4 max-w-md rounded-xl border border-border bg-muted/50 px-4 py-3 text-center text-sm text-muted-foreground">
+              Chad has left the chat. &ldquo;I&apos;m not getting paid enough
+              for this. Did you even make a ticket?&rdquo;
+            </div>
+          )}
           <div ref={bottomRef} />
         </div>
       </div>
-      <ChatInput onSend={handleSend} disabled={isTyping} />
+      <ChatInput onSend={handleSend} disabled={isTyping || isAtLimit} />
     </div>
   )
 }
